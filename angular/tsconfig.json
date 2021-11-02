@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@dignite/examining": [
+        "projects/examining/src/public-api.ts"
+      ],
+      "@dignite/examining/config": [
+        "projects/examining/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/examining/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/examining/src/lib/proxy/*"]
+    }
+  }
+}
