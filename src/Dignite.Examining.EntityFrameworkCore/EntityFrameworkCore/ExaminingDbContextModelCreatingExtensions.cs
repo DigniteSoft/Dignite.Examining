@@ -47,8 +47,6 @@ namespace Dignite.Examining.EntityFrameworkCore
                 //Properties
                 lib.Property(lib => lib.Name).IsRequired().HasMaxLength(LibraryConsts.MaxNameLength);
 
-                //Relations
-                lib.HasMany(lib => lib.Questions).WithOne().HasForeignKey(qt => qt.LibraryId);
             });
 
             builder.Entity<Question>(q =>
@@ -69,11 +67,7 @@ namespace Dignite.Examining.EntityFrameworkCore
                         jsonData => JsonConvert.DeserializeObject<QuestionTypeConfigurationData>(jsonData)
                         );
 
-                //Relations
-                q.HasOne<Library>().WithMany().IsRequired().HasForeignKey(q => q.LibraryId);
 
-                //Index
-                q.HasIndex(q => new object[] { q.Library, q.Order });
             });
 
 
@@ -84,11 +78,12 @@ namespace Dignite.Examining.EntityFrameworkCore
 
                 wa.ConfigureByConvention();
 
-                //Relations
-                wa.HasOne<Question>().WithMany().IsRequired().HasForeignKey(wa => wa.QuestionId);
 
                 //Indexs
                 wa.HasIndex(wa => wa.CreationTime);
+
+                //Keys
+                wa.HasKey(wa => new { wa.CreatorId, wa.QuestionId });
             });
 
             builder.Entity<Examination>(exam =>
@@ -111,8 +106,6 @@ namespace Dignite.Examining.EntityFrameworkCore
                         jsonData => JsonConvert.DeserializeObject<ICollection<ExaminationQuestionSetting>>(jsonData)
                         );
 
-                //Relations
-                exam.HasMany(e => e.AnswerPapers).WithOne().HasForeignKey(ap => ap.ExaminationId);
 
                 //Indexs
                 exam.HasIndex(e => e.CreationTime);
@@ -126,10 +119,6 @@ namespace Dignite.Examining.EntityFrameworkCore
 
                 ap.ConfigureByConvention();
 
-
-                //Relations
-                ap.HasMany(ap => ap.Answers).WithOne().HasForeignKey(ua => ua.AnswerPaperId);
-                ap.HasOne<Examination>().WithMany().IsRequired().HasForeignKey(ap => ap.ExaminationId);
 
                 //Indexs
                 ap.HasIndex(ap => ap.CreationTime);
@@ -145,9 +134,9 @@ namespace Dignite.Examining.EntityFrameworkCore
                 //Properties
                 ua.Property(ap => ap.Answer).IsRequired().HasMaxLength(QuestionDefinitionConsts.MaxQuestionRightAnswerLength);
 
-                //Relations
-                ua.HasOne<AnswerPaper>().WithMany().IsRequired().HasForeignKey(ap => ap.AnswerPaperId);
-                ua.HasOne<Question>().WithMany().IsRequired().HasForeignKey(ap => ap.QuestionId);
+
+                //Key
+                ua.HasKey(ua => new { ua.AnswerPaperId, ua.QuestionId });
             });
         }
     }

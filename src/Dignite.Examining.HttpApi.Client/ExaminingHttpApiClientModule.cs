@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Dignite.Abp.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Http.Client;
 using Volo.Abp.Modularity;
 
@@ -6,7 +7,9 @@ namespace Dignite.Examining
 {
     [DependsOn(
         typeof(ExaminingApplicationContractsModule),
-        typeof(AbpHttpClientModule))]
+        typeof(AbpHttpClientModule),
+        typeof(DigniteAbpIdentityHttpApiClientModule)
+        )]
     public class ExaminingHttpApiClientModule : AbpModule
     {
         public const string RemoteServiceName = "Examining";

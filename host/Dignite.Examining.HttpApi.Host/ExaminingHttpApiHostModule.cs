@@ -47,7 +47,8 @@ namespace Dignite.Examining
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
-        typeof(AbpSwashbuckleModule)
+        typeof(AbpSwashbuckleModule),
+        typeof(Volo.Abp.Http.Client.IdentityModel.Web.AbpHttpClientIdentityModelWebModule)
         )]
     public class ExaminingHttpApiHostModule : AbpModule
     {
