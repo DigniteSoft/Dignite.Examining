@@ -13,6 +13,7 @@ namespace Dignite.Examining.EntityFrameworkCore
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Exam> Exams { get; set; }
+        public DbSet<ExamUser> ExamUsers { get; set; }
         public DbSet<AnswerPaper> AnswerPapers { get; set; }
         public DbSet<UserAnswer> UserAnswers { get; set; }
         public DbSet<WrongAnswer> WrongAnswers { get; set; }

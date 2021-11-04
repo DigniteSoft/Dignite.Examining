@@ -102,6 +102,21 @@ namespace Dignite.Examining.EntityFrameworkCore
                 exam.HasIndex(e => e.CreationTime);
             });
 
+            builder.Entity<ExamUser>(eu =>
+            {
+                //Configure table & schema name
+                eu.ToTable(options.TablePrefix + "ExamUsers", options.Schema);
+
+                eu.ConfigureByConvention();
+
+
+                //Indexs
+                eu.HasKey(eu => new { eu.ExamId, eu.ExamCode });
+
+                //Key
+                eu.HasKey(eu => new { eu.ExamId, eu.UserId });
+            });
+
 
             builder.Entity<AnswerPaper>(ap =>
             {
@@ -112,8 +127,9 @@ namespace Dignite.Examining.EntityFrameworkCore
 
 
                 //Indexs
-                ap.HasIndex(ap => ap.CreationTime);
-                ap.HasIndex(ap => ap.CreatorId);
+                ap.HasIndex(ap =>new { ap.ExamId, ap.CreationTime });
+                ap.HasIndex(ap => new { ap.ExamId, ap.UserId });
+                ap.HasIndex(ap => new { ap.ExamId, ap.OrganizationUnitId });
             });
             builder.Entity<UserAnswer>(ua =>
             {

@@ -56,28 +56,6 @@ namespace Dignite.Examining.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExaminingUsers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(64)", maxLength: 64, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    OrganizationUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExaminingUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ExaminingAnswerPapers",
                 columns: table => new
                 {
@@ -87,6 +65,7 @@ namespace Dignite.Examining.Migrations
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
                     TakeUpSeconds = table.Column<double>(type: "float", nullable: false),
                     TotalScore = table.Column<float>(type: "real", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrganizationUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TenantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -97,6 +76,26 @@ namespace Dignite.Examining.Migrations
                     table.PrimaryKey("PK_ExaminingAnswerPapers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ExaminingAnswerPapers_ExaminingExams_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "ExaminingExams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExaminingExamUsers",
+                columns: table => new
+                {
+                    ExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrganizationUnitId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ExamCode = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExaminingExamUsers", x => new { x.ExamId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_ExaminingExamUsers_ExaminingExams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "ExaminingExams",
                         principalColumn: "Id",
@@ -183,19 +182,19 @@ namespace Dignite.Examining.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminingAnswerPapers_CreationTime",
+                name: "IX_ExaminingAnswerPapers_ExamId_CreationTime",
                 table: "ExaminingAnswerPapers",
-                column: "CreationTime");
+                columns: new[] { "ExamId", "CreationTime" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminingAnswerPapers_CreatorId",
+                name: "IX_ExaminingAnswerPapers_ExamId_OrganizationUnitId",
                 table: "ExaminingAnswerPapers",
-                column: "CreatorId");
+                columns: new[] { "ExamId", "OrganizationUnitId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminingAnswerPapers_ExamId",
+                name: "IX_ExaminingAnswerPapers_ExamId_UserId",
                 table: "ExaminingAnswerPapers",
-                column: "ExaminatExamIdionId");
+                columns: new[] { "ExamId", "UserId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ExaminingExams_CreationTime",
@@ -226,10 +225,10 @@ namespace Dignite.Examining.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ExaminingUserAnswers");
+                name: "ExaminingExamUsers");
 
             migrationBuilder.DropTable(
-                name: "ExaminingUsers");
+                name: "ExaminingUserAnswers");
 
             migrationBuilder.DropTable(
                 name: "ExaminingWrongAnswers");

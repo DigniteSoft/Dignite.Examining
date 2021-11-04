@@ -57,13 +57,16 @@ namespace Dignite.Examining.Migrations
                     b.Property<float>("TotalScore")
                         .HasColumnType("real");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreationTime");
+                    b.HasIndex("ExamId", "CreationTime");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("ExamId", "OrganizationUnitId");
 
-                    b.HasIndex("ExamId");
+                    b.HasIndex("ExamId", "UserId");
 
                     b.ToTable("ExaminingAnswerPapers");
                 });
@@ -140,6 +143,25 @@ namespace Dignite.Examining.Migrations
                     b.HasIndex("CreationTime");
 
                     b.ToTable("ExaminingExams");
+                });
+
+            modelBuilder.Entity("Dignite.Examining.Exams.ExamUser", b =>
+                {
+                    b.Property<Guid>("ExamId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ExamCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("OrganizationUnitId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ExamId", "UserId");
+
+                    b.ToTable("ExaminingExamUsers");
                 });
 
             modelBuilder.Entity("Dignite.Examining.Exams.UserAnswer", b =>
@@ -328,77 +350,21 @@ namespace Dignite.Examining.Migrations
                     b.ToTable("ExaminingQuestions");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Users.ExamUser", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("Email");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("EmailConfirmed");
-
-                    b.Property<string>("ExtraProperties")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasColumnName("Name");
-
-                    b.Property<Guid?>("OrganizationUnitId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)")
-                        .HasColumnName("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("PhoneNumberConfirmed");
-
-                    b.Property<string>("Surname")
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)")
-                        .HasColumnName("Surname");
-
-                    b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("TenantId");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UserName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExaminingUsers");
-                });
-
             modelBuilder.Entity("Dignite.Examining.Exams.AnswerPaper", b =>
                 {
                     b.HasOne("Dignite.Examining.Exams.Exam", "Exam")
                         .WithMany("AnswerPapers")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+                });
+
+            modelBuilder.Entity("Dignite.Examining.Exams.ExamUser", b =>
+                {
+                    b.HasOne("Dignite.Examining.Exams.Exam", "Exam")
+                        .WithMany("Users")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -455,6 +421,8 @@ namespace Dignite.Examining.Migrations
             modelBuilder.Entity("Dignite.Examining.Exams.Exam", b =>
                 {
                     b.Navigation("AnswerPapers");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Dignite.Examining.Questions.Library", b =>
