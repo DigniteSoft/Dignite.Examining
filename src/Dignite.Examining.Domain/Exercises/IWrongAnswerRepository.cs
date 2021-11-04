@@ -26,7 +26,7 @@ namespace Dignite.Examining.Exercises
         /// 
         /// </summary>
         /// <param name="creatorId"></param>
-        /// <param name="examinationPaperId"></param>
+        /// <param name="examPaperId"></param>
         /// <returns></returns>
         Task<List<WrongAnswer>> GetListAsync(Guid creatorId, int maxResultCount = 20, int skipCount = 0);
 

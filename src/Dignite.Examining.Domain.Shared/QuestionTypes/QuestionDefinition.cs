@@ -1,6 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using Dignite.Examining.Examinations;
+using Dignite.Examining.Exams;
 using System.Text.Json.Serialization;
 
 namespace Dignite.Examining.QuestionTypes
@@ -56,7 +56,7 @@ namespace Dignite.Examining.QuestionTypes
         /// 试题的分值；
         /// </summary>
         /// <remarks>
-        /// 当试卷采取<see cref="ExaminationQuestionSourceMode.Random"/>时，本值将无效，以题型设定的分值为准；
+        /// 当试卷采取<see cref="ExamQuestionSourceMode.Random"/>时，本值将无效，以题型设定的分值为准；
         /// </remarks>
         [Range(1,100)]
         public float? Score { get; set; }

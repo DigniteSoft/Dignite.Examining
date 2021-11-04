@@ -14,9 +14,9 @@ namespace Dignite.Examining.Permissions
             public const string Delete = Default + ".Delete";
         }
 
-        public static class Examinations
+        public static class Exams
         {
-            public const string Default = GroupName + ".Examinations";
+            public const string Default = GroupName + ".Exams";
             public const string Create = Default + ".Create";
             public const string Update = Default + ".Update";
             public const string Delete = Default + ".Delete";

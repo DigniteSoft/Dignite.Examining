@@ -32,6 +32,7 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Dignite.Examining
 {
@@ -90,6 +91,9 @@ namespace Dignite.Examining
                     options.SwaggerDoc("v1", new OpenApiInfo {Title = "Examining API", Version = "v1"});
                     options.DocInclusionPredicate((docName, description) => true);
                     options.CustomSchemaIds(type => type.FullName);
+                    var basepath = PlatformServices.Default.Application.ApplicationBasePath; 
+                    var xmlPath = Path.Combine(basepath, "Dignite.Examining.HttpApi.xml");
+                    options.IncludeXmlComments(xmlPath, false);
                 });
 
             Configure<AbpLocalizationOptions>(options =>

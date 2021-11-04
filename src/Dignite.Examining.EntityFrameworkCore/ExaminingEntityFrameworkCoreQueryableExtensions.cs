@@ -1,4 +1,4 @@
-﻿using Dignite.Examining.Examinations;
+﻿using Dignite.Examining.Exams;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,7 @@ namespace Dignite.Examining
 
             return queryable
                 .Include(x => x.Answers)
-                .Include(x => x.Examination);
+                .Include(x => x.Exam);
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.Modularity;
-using Dignite.Examining.Users;
-using Dignite.Examining.Examinations;
+using Dignite.Examining.Exams;
 using Dignite.Examining.Exercises;
 using Dignite.Examining.Questions;
 
@@ -18,13 +17,13 @@ namespace Dignite.Examining.EntityFrameworkCore
         {
             context.Services.AddAbpDbContext<ExaminingDbContext>(options =>
             {
-                options.AddRepository<ExamUser, EfCoreExamUserRepository>();
                 options.AddRepository<AnswerPaper, EfCoreAnswerPaperRepository>();
-                options.AddRepository<Examination, EfCoreExaminationRepository>();
+                options.AddRepository<Exam, EfCoreExamRepository>();
                 options.AddRepository<UserAnswer, EfCoreUserAnswerRepository>();
                 options.AddRepository<WrongAnswer, EfCoreWrongAnswerRepository>();
                 options.AddRepository<Library, EfCoreLibraryRepository>();
                 options.AddRepository<Question, EfCoreQuestionRepository>();
+                options.AddRepository<ExamUser, EfCoreExamUserRepository>();
             });
         }
     }

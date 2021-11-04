@@ -8,7 +8,7 @@ namespace Dignite.Examining.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ExaminingExaminations",
+                name: "ExaminingExams",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -30,7 +30,7 @@ namespace Dignite.Examining.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExaminingExaminations", x => x.Id);
+                    table.PrimaryKey("PK_ExaminingExams", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,7 +83,7 @@ namespace Dignite.Examining.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    ExaminationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
                     TakeUpSeconds = table.Column<double>(type: "float", nullable: false),
                     TotalScore = table.Column<float>(type: "real", nullable: false),
@@ -96,9 +96,9 @@ namespace Dignite.Examining.Migrations
                 {
                     table.PrimaryKey("PK_ExaminingAnswerPapers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExaminingAnswerPapers_ExaminingExaminations_ExaminationId",
-                        column: x => x.ExaminationId,
-                        principalTable: "ExaminingExaminations",
+                        name: "FK_ExaminingAnswerPapers_ExaminingExams_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "ExaminingExams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -193,13 +193,13 @@ namespace Dignite.Examining.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminingAnswerPapers_ExaminationId",
+                name: "IX_ExaminingAnswerPapers_ExamId",
                 table: "ExaminingAnswerPapers",
-                column: "ExaminationId");
+                column: "ExaminatExamIdionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExaminingExaminations_CreationTime",
-                table: "ExaminingExaminations",
+                name: "IX_ExaminingExams_CreationTime",
+                table: "ExaminingExams",
                 column: "CreationTime");
 
             migrationBuilder.CreateIndex(
@@ -241,7 +241,7 @@ namespace Dignite.Examining.Migrations
                 name: "ExaminingQuestions");
 
             migrationBuilder.DropTable(
-                name: "ExaminingExaminations");
+                name: "ExaminingExams");
 
             migrationBuilder.DropTable(
                 name: "ExaminingLibraries");

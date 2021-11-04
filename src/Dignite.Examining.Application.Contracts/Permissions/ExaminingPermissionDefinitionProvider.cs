@@ -15,10 +15,10 @@ namespace Dignite.Examining.Permissions
             questions.AddChild(ExaminingPermissions.Questions.Update, L("Permission:Edit"));
             questions.AddChild(ExaminingPermissions.Questions.Delete, L("Permission:Delete"));
 
-            var examinations = group.AddPermission(ExaminingPermissions.Examinations.Default, L("Permission:Examinations"));
-            examinations.AddChild(ExaminingPermissions.Examinations.Create, L("Permission:Create"));
-            examinations.AddChild(ExaminingPermissions.Examinations.Update, L("Permission:Edit"));
-            examinations.AddChild(ExaminingPermissions.Examinations.Delete, L("Permission:Delete"));
+            var exams = group.AddPermission(ExaminingPermissions.Exams.Default, L("Permission:Exams"));
+            exams.AddChild(ExaminingPermissions.Exams.Create, L("Permission:Create"));
+            exams.AddChild(ExaminingPermissions.Exams.Update, L("Permission:Edit"));
+            exams.AddChild(ExaminingPermissions.Exams.Delete, L("Permission:Delete"));
 
             var answerPapers = group.AddPermission(ExaminingPermissions.AnswerPapers.Default, L("Permission:AnswerPapers"));
             answerPapers.AddChild(ExaminingPermissions.AnswerPapers.Delete, L("Permission:Delete"));

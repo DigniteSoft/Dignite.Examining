@@ -23,7 +23,7 @@ namespace Dignite.Examining.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.AnswerPaper", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.AnswerPaper", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -37,7 +37,7 @@ namespace Dignite.Examining.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatorId");
 
-                    b.Property<Guid>("ExaminationId")
+                    b.Property<Guid>("ExamId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsActive")
@@ -65,12 +65,12 @@ namespace Dignite.Examining.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("ExaminationId");
+                    b.HasIndex("ExamId");
 
                     b.ToTable("ExaminingAnswerPapers");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.Examination", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.Exam", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -141,10 +141,10 @@ namespace Dignite.Examining.Migrations
 
                     b.HasIndex("CreationTime");
 
-                    b.ToTable("ExaminingExaminations");
+                    b.ToTable("ExaminingExams");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.UserAnswer", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.UserAnswer", b =>
                 {
                     b.Property<Guid>("AnswerPaperId")
                         .HasColumnType("uniqueidentifier");
@@ -397,20 +397,20 @@ namespace Dignite.Examining.Migrations
                     b.ToTable("ExaminingUsers");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.AnswerPaper", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.AnswerPaper", b =>
                 {
-                    b.HasOne("Dignite.Examining.Examinations.Examination", "Examination")
+                    b.HasOne("Dignite.Examining.Exams.Exam", "Exam")
                         .WithMany("AnswerPapers")
-                        .HasForeignKey("ExaminationId")
+                        .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Examination");
+                    b.Navigation("Exam");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.UserAnswer", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.UserAnswer", b =>
                 {
-                    b.HasOne("Dignite.Examining.Examinations.AnswerPaper", "AnswerPaper")
+                    b.HasOne("Dignite.Examining.Exams.AnswerPaper", "AnswerPaper")
                         .WithMany("Answers")
                         .HasForeignKey("AnswerPaperId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -449,12 +449,12 @@ namespace Dignite.Examining.Migrations
                     b.Navigation("Library");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.AnswerPaper", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.AnswerPaper", b =>
                 {
                     b.Navigation("Answers");
                 });
 
-            modelBuilder.Entity("Dignite.Examining.Examinations.Examination", b =>
+            modelBuilder.Entity("Dignite.Examining.Exams.Exam", b =>
                 {
                     b.Navigation("AnswerPapers");
                 });

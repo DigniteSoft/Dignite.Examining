@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
-using Volo.Abp.Users.EntityFrameworkCore;
-using Dignite.Examining.Users;
-using Dignite.Examining.Examinations;
+using Dignite.Examining.Exams;
 using Dignite.Examining.Exercises;
 using Dignite.Examining.Questions;
 using Dignite.Examining.QuestionTypes;
@@ -29,13 +27,6 @@ namespace Dignite.Examining.EntityFrameworkCore
 
             optionsAction?.Invoke(options);
 
-            builder.Entity<ExamUser>(eu =>
-            {
-                eu.ToTable(options.TablePrefix + "Users", options.Schema);
-
-                eu.ConfigureByConvention();
-                eu.ConfigureAbpUser();
-            });
 
             builder.Entity<Library>(lib =>
             {
@@ -86,24 +77,24 @@ namespace Dignite.Examining.EntityFrameworkCore
                 wa.HasKey(wa => new { wa.CreatorId, wa.QuestionId });
             });
 
-            builder.Entity<Examination>(exam =>
+            builder.Entity<Exam>(exam =>
             {
                 //Configure table & schema name
-                exam.ToTable(options.TablePrefix + "Examinations", options.Schema);
+                exam.ToTable(options.TablePrefix + "Exams", options.Schema);
 
                 exam.ConfigureByConvention();
 
                 //Properties
-                exam.Property(e => e.Title).IsRequired().HasMaxLength(ExaminationConsts.MaxTitleLength);
+                exam.Property(e => e.Title).IsRequired().HasMaxLength(ExamConsts.MaxTitleLength);
                 exam.Property(e => e.Settings)
                     .HasConversion(
                         config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                        jsonData => JsonConvert.DeserializeObject<ExaminationSetting>(jsonData)
+                        jsonData => JsonConvert.DeserializeObject<ExamSetting>(jsonData)
                         );
                 exam.Property(e => e.QuestionSettings)
                     .HasConversion(
                         config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                        jsonData => JsonConvert.DeserializeObject<ICollection<ExaminationQuestionSetting>>(jsonData)
+                        jsonData => JsonConvert.DeserializeObject<ICollection<ExamQuestionSetting>>(jsonData)
                         );
 
 

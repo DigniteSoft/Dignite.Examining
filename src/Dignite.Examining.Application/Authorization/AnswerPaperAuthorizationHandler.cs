@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 using System.Threading.Tasks;
-using Dignite.Examining.Examinations;
+using Dignite.Examining.Exams;
 using Dignite.Examining.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -47,7 +47,7 @@ namespace Dignite.Examining.Authorization
 
         private async Task<bool> HasDeletePermission(AuthorizationHandlerContext context, AnswerPaper resource)
         {
-            if (await _permissionChecker.IsGrantedAsync(ExaminingPermissions.Examinations.Delete))
+            if (await _permissionChecker.IsGrantedAsync(ExaminingPermissions.Exams.Delete))
             {
                 return true;
             }
