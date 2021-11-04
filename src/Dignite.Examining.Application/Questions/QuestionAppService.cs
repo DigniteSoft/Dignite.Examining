@@ -22,18 +22,6 @@ namespace Dignite.Examining.Questions
             _questionsParserSelector = questionsParserSelector;
         }
 
-        [Authorize(ExaminingPermissions.Questions.Default)]
-        public async Task<PagedResultDto<QuestionDto>> GetListAsync(GetQuestionsInput input)
-        {
-            var count = await _questionRepository.GetCountAsync(input.LiraryId);
-            var result = await _questionRepository.GetListAsync(input.LiraryId,input.SkipCount,input.MaxResultCount);
-            var dto = new PagedResultDto<QuestionDto>(
-                count,
-                ObjectMapper.Map<List<Question>, List<QuestionDto>>(result)
-                );
-
-            return dto;
-        }
 
         [Authorize(ExaminingPermissions.Questions.Create)]
         public async Task<QuestionDto> CreateAsync(QuestionEditDto input)

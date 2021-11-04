@@ -7,6 +7,9 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Questions
 {
+    /// <summary>
+    /// 试题
+    /// </summary>
     [RemoteService]
     [Route("api/examining/questions")]
     public class QuestionController : ExaminingController, IQuestionAppService
@@ -18,6 +21,11 @@ namespace Dignite.Examining.Questions
             _questionAppService = questionAppService;
         }
 
+        /// <summary>
+        /// 创建试题
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public async Task<QuestionDto> CreateAsync(QuestionEditDto input)
@@ -25,7 +33,11 @@ namespace Dignite.Examining.Questions
             return await _questionAppService.CreateAsync(input);
         }
 
-
+        /// <summary>
+        /// 删除试题
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
@@ -34,13 +46,13 @@ namespace Dignite.Examining.Questions
             await _questionAppService.DeleteAsync(id);
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<PagedResultDto<QuestionDto>> GetListAsync(GetQuestionsInput input)
-        {
-            return await _questionAppService.GetListAsync(input);
-        }
 
+        /// <summary>
+        /// 移动试题
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="beforeId"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut]
         [Route("{id}/move")]
@@ -49,6 +61,11 @@ namespace Dignite.Examining.Questions
             await _questionAppService.MoveAsync(id,beforeId);
         }
 
+        /// <summary>
+        /// 从文本中解析试题集
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("parse-questions-from-text")]
@@ -57,6 +74,12 @@ namespace Dignite.Examining.Questions
             return _questionAppService.ParseFromText(input);
         }
 
+        /// <summary>
+        /// 更新试题
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPut]
         [Route("{id}")]

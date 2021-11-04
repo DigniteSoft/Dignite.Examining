@@ -63,5 +63,18 @@ namespace Dignite.Examining.Questions
 
             await _libraryRepository.DeleteAsync(id);
         }
+
+        [Authorize(ExaminingPermissions.Questions.Default)]
+        public async Task<PagedResultDto<QuestionDto>> GetListAsync(Guid id,PagedResultRequestDto paged)
+        {
+            var count = await _questionRepository.GetCountAsync(id);
+            var result = await _questionRepository.GetListAsync(id, paged.SkipCount, paged.MaxResultCount);
+            var dto = new PagedResultDto<QuestionDto>(
+                count,
+                ObjectMapper.Map<List<Question>, List<QuestionDto>>(result)
+                );
+
+            return dto;
+        }
     }
 }

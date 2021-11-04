@@ -7,6 +7,9 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exercises
 {
+    /// <summary>
+    /// 错题集
+    /// </summary>
     [RemoteService]
     [Route("api/examining/wrong-answers")]
     public class WrongAnswerController : ExaminingController, IWrongAnswerAppService
@@ -18,6 +21,11 @@ namespace Dignite.Examining.Exercises
             _wrongAnswerAppService = wrongAnswerAppService;
         }
 
+        /// <summary>
+        /// 获取我的错题集
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         [Route("my")]
@@ -26,6 +34,11 @@ namespace Dignite.Examining.Exercises
             return await _wrongAnswerAppService.GetMyAsync(input);
         }
 
+        /// <summary>
+        /// 移除一个错题
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete]
         [Route("my/remove")]

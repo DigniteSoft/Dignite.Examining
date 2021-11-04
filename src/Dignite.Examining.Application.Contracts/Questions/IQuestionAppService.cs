@@ -8,7 +8,6 @@ namespace Dignite.Examining.Questions
 {
     public interface IQuestionAppService : IApplicationService
     {
-        Task<PagedResultDto<QuestionDto>> GetListAsync(GetQuestionsInput input);
 
         /// <summary>
         /// 

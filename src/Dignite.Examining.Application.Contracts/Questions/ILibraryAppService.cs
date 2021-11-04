@@ -35,5 +35,7 @@ namespace Dignite.Examining.Questions
         /// <param name="input"></param>
         /// <returns></returns>
         Task<PagedResultDto<LibraryDto>> GetListAsync(PagedResultRequestDto input);
+
+        Task<PagedResultDto<QuestionDto>> GetListAsync(Guid id, PagedResultRequestDto paged);
     }
 }

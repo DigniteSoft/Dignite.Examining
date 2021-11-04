@@ -18,6 +18,11 @@ namespace Dignite.Examining.Exams
             _answerPaperAppService = answerPaperAppService;
         }
 
+        /// <summary>
+        /// 删除答卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
@@ -26,6 +31,11 @@ namespace Dignite.Examining.Exams
             await _answerPaperAppService.DeleteAsync(id);
         }
 
+        /// <summary>
+        /// 获取答卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         [Route("{id}")]
@@ -34,6 +44,11 @@ namespace Dignite.Examining.Exams
             return await _answerPaperAppService.GetAsync(id);
         }
 
+        /// <summary>
+        /// 获取我的所有答卷
+        /// </summary>
+        /// <param name="paged"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         [Route("my")]
@@ -42,8 +57,14 @@ namespace Dignite.Examining.Exams
             return await _answerPaperAppService.GetMyAsync(paged);
         }
 
+        /// <summary>
+        /// 提交答卷
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [Authorize]
-        [HttpPost]
+        [HttpPut]
         [Route("{id}")]
         public async Task<AnswerPaperDto> SubmitAsync(Guid id, SubmitAnswerInput input)
         {
