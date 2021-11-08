@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exams
 {
-    public class UserAnswerDto:EntityDto<Guid>
+    public class UserAnswerDto:EntityDto
     {
         public Guid AnswerPaperId { get; protected set; }
 
