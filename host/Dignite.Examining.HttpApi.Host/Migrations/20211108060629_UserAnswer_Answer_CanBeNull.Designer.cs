@@ -4,15 +4,17 @@ using Dignite.Examining.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 
 namespace Dignite.Examining.Migrations
 {
     [DbContext(typeof(ExaminingHttpApiHostMigrationsDbContext))]
-    partial class ExaminingHttpApiHostMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211108060629_UserAnswer_Answer_CanBeNull")]
+    partial class UserAnswer_Answer_CanBeNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

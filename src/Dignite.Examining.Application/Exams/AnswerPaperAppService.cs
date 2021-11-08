@@ -66,25 +66,31 @@ namespace Dignite.Examining.Exams
                     0,
                     1);
 
-                var activeAnswerPaper = activeAnswerPapers[0];
-                switch (answerPaper.Exam.Settings.ActiveScoreMode)
+                if (activeAnswerPapers.Any())
                 {
-                    case ActiveScoreMode.Highest:
-                        if (activeAnswerPaper.TotalScore < answerPaper.TotalScore)
-                        {
+                    var activeAnswerPaper = activeAnswerPapers[0];
+                    switch (answerPaper.Exam.Settings.ActiveScoreMode)
+                    {
+                        case ActiveScoreMode.Highest:
+                            if (activeAnswerPaper.TotalScore < answerPaper.TotalScore)
+                            {
+                                activeAnswerPaper.IsActive = false;
+                                answerPaper.IsActive = true;
+                                await _answerPaperRepository.UpdateAsync(activeAnswerPaper);
+                            }
+                            break;
+                        case ActiveScoreMode.Lasted:
                             activeAnswerPaper.IsActive = false;
                             answerPaper.IsActive = true;
                             await _answerPaperRepository.UpdateAsync(activeAnswerPaper);
-                        }
-                        break;
-                    case ActiveScoreMode.Lasted:
-                        activeAnswerPaper.IsActive = false;
-                        answerPaper.IsActive = true;
-                        await _answerPaperRepository.UpdateAsync(activeAnswerPaper);
-                        break;
+                            break;
+                    }
                 }
-
-            }
+                else
+                {
+                    answerPaper.IsActive = true;
+                }
+             }
 
             answerPaper.IsCompleted = true;
             await _answerPaperRepository.UpdateAsync(answerPaper);
@@ -115,7 +121,7 @@ namespace Dignite.Examining.Exams
             var count = await _answerPaperRepository.GetCountAsync(currentUserId);
             if (count > 0)
             {
-                var result = await _answerPaperRepository.GetListAsync(currentUserId, input.SkipCount, input.MaxResultCount);
+                var result = await _answerPaperRepository.GetListAsync(currentUserId,null, input.SkipCount, input.MaxResultCount);
                 var exams = await _examRepository.GetListAsync(result.Select(ap => ap.ExamId).Distinct());
                 var dto = new PagedResultDto<AnswerPaperDto>(
                     count,

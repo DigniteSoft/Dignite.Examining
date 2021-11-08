@@ -1,13 +1,10 @@
 ﻿
 using Dignite.Examining.Questions;
 using Dignite.Examining.QuestionTypes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
-using Volo.Abp.Guids;
 
 namespace Dignite.Examining.Exams
 {

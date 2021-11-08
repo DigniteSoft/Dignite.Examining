@@ -139,7 +139,7 @@ namespace Dignite.Examining.EntityFrameworkCore
                 ua.ConfigureByConvention();
 
                 //Properties
-                ua.Property(ap => ap.Answer).IsRequired().HasMaxLength(QuestionDefinitionConsts.MaxQuestionRightAnswerLength);
+                ua.Property(ap => ap.Answer).HasMaxLength(QuestionDefinitionConsts.MaxQuestionRightAnswerLength);
 
 
                 //Key

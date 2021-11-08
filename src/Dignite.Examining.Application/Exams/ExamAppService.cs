@@ -173,23 +173,44 @@ namespace Dignite.Examining.Exams
             var exam = await _examRepository.GetAsync(id, false);
             CheckGenerateAnswerPaper(exam);
 
+            //用户有效成绩的答卷（只有一条是有效的）
+            var activedUserAnswerPapers = await _answerPaperRepository.GetListAsync(exam.Id, null, userId, 0, 1);
+            if (activedUserAnswerPapers.Any())
+            {
+                if (activedUserAnswerPapers[0].CreatorId != CurrentUser.Id)
+                {
+                    throw new Volo.Abp.UserFriendlyException($"不能替考！");
+                }
+            }
+
+            //
             AnswerPaper answerPaper = null;
 
-            //获取用户已答卷
-            var userAnswerPapers = await _answerPaperRepository.GetListAsync(id, null, userId,0,exam.Settings.MaxAnswerNumber);            
-            if (userAnswerPapers.Any() 
-                && !userAnswerPapers[0].IsCompleted 
-                && userAnswerPapers[0].CreationTime.AddMinutes(exam.Settings.LimitExamTime)<Clock.Now)
-            {
-                answerPaper = userAnswerPapers[0];
-            }
-            else
-            {
-                if (userAnswerPapers.Count(uap => uap.IsCompleted) >= exam.Settings.MaxAnswerNumber)
+            //获取用户的所有答卷
+            var userAllAnswerPapers = await _answerPaperRepository.GetListAsync(CurrentUser.Id.Value, exam.Id,0,exam.Settings.MaxAnswerNumber);
+            if (userAllAnswerPapers.Any())
+            { 
+                if (userAllAnswerPapers.Count(uap => uap.IsCompleted) >= exam.Settings.MaxAnswerNumber)
                 {
                     throw new Volo.Abp.UserFriendlyException($"本次考试最多有 {exam.Settings.MaxAnswerNumber} 次机会！");
                 }
 
+                if (!userAllAnswerPapers[0].IsCompleted
+                && userAllAnswerPapers[0].CreationTime.AddMinutes(exam.Settings.LimitExamTime) > Clock.Now)
+                {
+                    answerPaper = await _answerPaperRepository.GetAsync(userAllAnswerPapers[0].Id,true);
+                }
+                else
+                {
+                    //生成试卷
+                    answerPaper = await _examManager.GenerateAnswerPaperAsync(exam);
+                    answerPaper.UserId = userId;
+                    answerPaper.OrganizationUnitId = ouId;
+                    await _answerPaperRepository.InsertAsync(answerPaper);
+                }
+            }
+            else
+            {
                 //生成试卷
                 answerPaper = await _examManager.GenerateAnswerPaperAsync(exam);
                 answerPaper.UserId = userId;

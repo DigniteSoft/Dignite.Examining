@@ -17,7 +17,7 @@ namespace Dignite.Examining.Exams
 
 
         /// <summary>
-        /// 获取考试的答卷数量
+        /// 获取考试的有效答卷数量
         /// </summary>
         /// <param name="examId"></param>
         /// <param name="organizationUnitIds"></param>
@@ -30,7 +30,7 @@ namespace Dignite.Examining.Exams
 
 
         /// <summary>
-        /// 获取考试的答卷列表
+        /// 获取考试的有效答卷列表
         /// </summary>
         /// <param name="examId"></param>
         /// <param name="organizationUnitIds"></param>
@@ -46,21 +46,24 @@ namespace Dignite.Examining.Exams
             int maxResultCount = 20);
 
         /// <summary>
-        /// 获取用户的答卷数量
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        Task<int> GetCountAsync(Guid creatorId);
-
-        /// <summary>
-        /// 获取答卷
+        /// 获取用户的所有答卷数量
         /// </summary>
         /// <param name="creatorId"></param>
+        /// <param name="examId"></param>
+        /// <returns></returns>
+        Task<int> GetCountAsync(Guid creatorId, Guid? examId);
+
+        /// <summary>
+        /// 获取用户的所有答卷
+        /// </summary>
+        /// <param name="creatorId"></param>
+        /// <param name="examId"></param>
         /// <param name="skipCount"></param>
         /// <param name="maxResultCount"></param>
         /// <returns></returns>
         Task<List<AnswerPaper>> GetListAsync(
             Guid creatorId,
+            Guid? examId,
             int skipCount = 0,
             int maxResultCount = 20);
 

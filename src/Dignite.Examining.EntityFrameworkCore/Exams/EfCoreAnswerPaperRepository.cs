@@ -32,22 +32,22 @@ namespace Dignite.Examining.Exams
         {
             return await (await QueryAsync(examId, organizationUnitIds, userId))
                 .OrderByDescending(ap=>ap.IsActive)
-                .OrderByDescending(ap=>ap.TotalScore)
+                .ThenBy(ap=>ap.TotalScore)
                 .ThenBy(ap=>ap.TakeUpSeconds)
                 .Skip(skipCount)
                 .Take(maxResultCount)
                 .ToListAsync();
         }
 
-        public async Task<int> GetCountAsync(Guid creatorId)
+        public async Task<int> GetCountAsync(Guid creatorId, Guid? examId)
         {
             return await (await QueryAsync(creatorId))
                 .CountAsync();
         }
 
-        public async Task<List<AnswerPaper>> GetListAsync(Guid creatorId, int skipCount = 0, int maxResultCount = 20)
+        public async Task<List<AnswerPaper>> GetListAsync(Guid creatorId,Guid? examId, int skipCount = 0, int maxResultCount = 20)
         {
-            return await (await QueryAsync(creatorId))
+            return await (await QueryAsync(creatorId,examId))
                 .OrderByDescending(ap => ap.Id)
                 .Skip(skipCount)
                 .Take(maxResultCount)
@@ -79,7 +79,7 @@ namespace Dignite.Examining.Exams
             var my = await (await GetDbSetAsync()).FirstOrDefaultAsync(m => m.ExamId == examId && m.IsActive && m.CreatorId == userId);
             if (my != null)
             {
-                var query = (await QueryAsync(examId, organizationUnitIds, userId)).Where(ap => ap.IsActive);
+                var query = await QueryAsync(examId, organizationUnitIds, userId);
                 var scoreRank = await query
                     .Where(m =>m.TotalScore > my.TotalScore)
                     .CountAsync();
@@ -113,10 +113,11 @@ namespace Dignite.Examining.Exams
                 .WhereIf(userId.HasValue, r => r.UserId == userId)
                 ;
         }
-        private async Task<IQueryable<AnswerPaper>> QueryAsync(Guid creatorId)
+        private async Task<IQueryable<AnswerPaper>> QueryAsync(Guid creatorId, Guid? examId)
         {
             return (await GetDbSetAsync())
                 .Where(ap => ap.CreatorId == creatorId)
+                .WhereIf(examId.HasValue,ap=>ap.ExamId==examId.Value)
                 ;
         }
     }
