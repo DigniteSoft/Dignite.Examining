@@ -57,8 +57,6 @@ namespace Dignite.Examining.EntityFrameworkCore
                         config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
                         jsonData => JsonConvert.DeserializeObject<QuestionTypeConfigurationData>(jsonData)
                         );
-
-
             });
 
 

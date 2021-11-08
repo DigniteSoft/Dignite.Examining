@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dignite.Examining.Permissions;
+using Dignite.Examining.Questions;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exams
@@ -14,14 +16,17 @@ namespace Dignite.Examining.Exams
         private readonly IAnswerPaperRepository _answerPaperRepository;
         private readonly IExamManager _examManager;
         private readonly IExamUserRepository _examUserRepository;
+        private readonly IQuestionRepository _questionRepository;
 
-        public ExamAppService(IExamRepository examRepository, IAnswerPaperRepository answerPaperRepository, IExamManager examManager, IExamUserRepository examUserRepository)
+        public ExamAppService(IExamRepository examRepository, IAnswerPaperRepository answerPaperRepository, IExamManager examManager, IExamUserRepository examUserRepository, IQuestionRepository questionRepository)
         {
             _examRepository = examRepository;
             _answerPaperRepository = answerPaperRepository;
             _examManager = examManager;
             _examUserRepository = examUserRepository;
+            _questionRepository = questionRepository;
         }
+
 
         /// <summary>
         /// 创建考试
@@ -199,6 +204,11 @@ namespace Dignite.Examining.Exams
                 && userAllAnswerPapers[0].CreationTime.AddMinutes(exam.Settings.LimitExamTime) > Clock.Now)
                 {
                     answerPaper = await _answerPaperRepository.GetAsync(userAllAnswerPapers[0].Id,true);
+                    var questions = await _questionRepository.GetListAsync(answerPaper.Answers.Select(ua => ua.QuestionId));
+                    foreach (var ua in answerPaper.Answers)
+                    {
+                        ua.Question = questions.First(q => q.Id == ua.QuestionId);
+                    }
                 }
                 else
                 {
@@ -230,6 +240,10 @@ namespace Dignite.Examining.Exams
             foreach (var q in output.Questions)
             {
                 q.Analysis = null;
+                foreach (var property in q.Configuration.Properties)
+                {
+                    q.Configuration.Properties[property.Key]= JsonConvert.SerializeObject( property.Value);
+                }
             }
 
             return output;
