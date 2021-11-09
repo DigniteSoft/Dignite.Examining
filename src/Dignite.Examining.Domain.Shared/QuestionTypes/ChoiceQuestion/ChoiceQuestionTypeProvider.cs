@@ -38,7 +38,7 @@ namespace Dignite.Examining.QuestionTypes.ChoiceQuestion
             }
         }
 
-        public override QuestionTypeConfigurationBase GetConfiguration(QuestionTypeConfigurationData fieldConfiguration)
+        public override QuestionTypeConfigurationBase GetConfiguration(QuestionConfigurationDictionary fieldConfiguration)
         {
             return fieldConfiguration.GetChoiceQuestionConfiguration();
         }

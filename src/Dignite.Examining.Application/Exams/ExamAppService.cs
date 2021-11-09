@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using Dignite.Examining.Permissions;
 using Dignite.Examining.Questions;
 using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exams
@@ -240,13 +242,6 @@ namespace Dignite.Examining.Exams
             {
                 //移除问题的解析
                 q.Analysis = null;
-
-                //asp.net mvc的弱智序列化未能将字典表中复杂对象正确的序列化，
-                //将问题的配置字典值重新序列化一次解决问题
-                foreach (var property in q.Configuration.Properties)
-                {
-                    q.Configuration.Properties[property.Key]= JsonConvert.SerializeObject( property.Value);
-                }
             }
 
             return output;

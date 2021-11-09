@@ -21,7 +21,7 @@ namespace Dignite.Examining.Questions
             string analysis,
             float? score,
             string rightAnswer,
-            QuestionTypeConfigurationData configuration,
+            QuestionConfigurationDictionary configuration,
             string description,
             Guid? tenantId
             ):base(questionTypeProviderName,content, analysis,score,rightAnswer,configuration,description)
@@ -102,7 +102,7 @@ namespace Dignite.Examining.Questions
             string analysis,
             float? score,
             string rightAnswer,
-            QuestionTypeConfigurationData configuration,
+            QuestionConfigurationDictionary configuration,
             string description
             )
         {

@@ -13,6 +13,6 @@ namespace Dignite.Examining.QuestionTypes
 
         float? CalculateScore(CalculateScoreArgs args);
 
-        QuestionTypeConfigurationBase GetConfiguration(QuestionTypeConfigurationData fieldFormConfiguration);
+        QuestionTypeConfigurationBase GetConfiguration(QuestionConfigurationDictionary fieldFormConfiguration);
     }
 }

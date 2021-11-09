@@ -18,7 +18,7 @@ namespace Dignite.Examining.QuestionTypes
             string analysis, 
             float? score, 
             string rightAnswer, 
-            QuestionTypeConfigurationData configuration, 
+            QuestionConfigurationDictionary configuration, 
             string description)
         {
             QuestionTypeProviderName = questionTypeProviderName;
@@ -73,7 +73,7 @@ namespace Dignite.Examining.QuestionTypes
         /// 各题型的配置项
         /// </summary>
         [Required]
-        public virtual QuestionTypeConfigurationData Configuration { get; set; }
+        public virtual QuestionConfigurationDictionary Configuration { get; set; }
 
 
         /// <summary>

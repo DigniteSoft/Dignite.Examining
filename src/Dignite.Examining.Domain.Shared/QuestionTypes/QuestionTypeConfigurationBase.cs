@@ -4,10 +4,10 @@ namespace Dignite.Examining.QuestionTypes
 {
     public abstract class QuestionTypeConfigurationBase
     {
-        protected readonly QuestionTypeConfigurationData _fieldFormConfiguration;
+        protected readonly QuestionConfigurationDictionary _fieldFormConfiguration;
 
         public QuestionTypeConfigurationBase(
-            QuestionTypeConfigurationData fieldFormConfiguration)
+            QuestionConfigurationDictionary fieldFormConfiguration)
         {
             _fieldFormConfiguration = fieldFormConfiguration;
         }

@@ -42,7 +42,7 @@ namespace Dignite.Examining.QuestionTypes
 
         public abstract float? CalculateScore(CalculateScoreArgs args);
 
-        public abstract QuestionTypeConfigurationBase GetConfiguration(QuestionTypeConfigurationData fieldConfiguration);
+        public abstract QuestionTypeConfigurationBase GetConfiguration(QuestionConfigurationDictionary fieldConfiguration);
 
         protected virtual IStringLocalizer CreateLocalizer()
         {

@@ -54,9 +54,9 @@ namespace Dignite.Examining.EntityFrameworkCore
                 q.Property(q => q.Description).HasMaxLength(QuestionDefinitionConsts.MaxQuestionDescriptioneLength);
                 q.Property(q => q.Configuration)
                     .HasConversion(
-                        config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                        jsonData => JsonConvert.DeserializeObject<QuestionTypeConfigurationData>(jsonData)
-                        );
+                        new QuestionConfigurationValueConverter()
+                        )
+                .Metadata.SetValueComparer(new QuestionConfigurationDictionaryValueComparer());
             });
 
 

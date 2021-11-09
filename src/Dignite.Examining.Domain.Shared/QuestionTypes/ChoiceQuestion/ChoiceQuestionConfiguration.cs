@@ -11,8 +11,8 @@ namespace Dignite.Examining.QuestionTypes.ChoiceQuestion
         /// </summary>
         public List<ChoiceQuestionListItem> ListItems
         {
-            get => _fieldFormConfiguration.GetConfigurationOrDefault<List<ChoiceQuestionListItem>>(ChoiceQuestionConfigurationNames.ListItems, null);
-            set => _fieldFormConfiguration.SetConfiguration(ChoiceQuestionConfigurationNames.ListItems, value);
+            get => _fieldFormConfiguration.GetConfigurationOrDefault<List<ChoiceQuestionListItem>>(ChoiceQuestionConfigurationNames.ListItemsName, null);
+            set => _fieldFormConfiguration.SetConfiguration(ChoiceQuestionConfigurationNames.ListItemsName, value);
         }
 
         /// <summary>
@@ -20,13 +20,13 @@ namespace Dignite.Examining.QuestionTypes.ChoiceQuestion
         /// </summary>
         public ChoiceQuestionMode Mode
         {
-            get => (ChoiceQuestionMode) (int)(long)_fieldFormConfiguration.GetConfigurationOrNull(ChoiceQuestionConfigurationNames.Mode, (int)ChoiceQuestionMode.Single);
-            set => _fieldFormConfiguration.SetConfiguration(ChoiceQuestionConfigurationNames.Mode, value);
+            get => _fieldFormConfiguration.GetConfigurationOrDefault(ChoiceQuestionConfigurationNames.ChoiceQuestionModeName, ChoiceQuestionMode.Single);
+            set => _fieldFormConfiguration.SetConfiguration(ChoiceQuestionConfigurationNames.ChoiceQuestionModeName, value);
         }
 
 
 
-        public ChoiceQuestionConfiguration(QuestionTypeConfigurationData fieldConfiguration)
+        public ChoiceQuestionConfiguration(QuestionConfigurationDictionary fieldConfiguration)
             :base(fieldConfiguration)
         {
         }

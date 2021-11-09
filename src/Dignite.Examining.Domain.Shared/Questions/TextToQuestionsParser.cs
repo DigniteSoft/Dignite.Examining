@@ -105,7 +105,7 @@ namespace Dignite.Examining.Questions
         /// </summary>
         /// <param name="arrQuestionGroup"></param>
         /// <returns></returns>
-        QuestionTypeConfigurationData GetQuestionConfiguration(string[] arrQuestionGroup)
+        QuestionConfigurationDictionary GetQuestionConfiguration(string[] arrQuestionGroup)
         {
             return null;
         }

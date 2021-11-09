@@ -7,11 +7,11 @@ namespace Dignite.Examining.QuestionTypes.ChoiceQuestion
         /// <summary>
         /// 
         /// </summary>
-        public const string ListItems = "ChoiceQuestionListItems";
+        public const string ListItemsName = "ChoiceQuestionListItems";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string Mode = "ChoiceQuestionMode";
+        public const string ChoiceQuestionModeName = "ChoiceQuestionMode";
     }
 }
