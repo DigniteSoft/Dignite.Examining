@@ -1,5 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.Unicode;
 
 namespace Dignite.Examining.QuestionTypes
@@ -29,7 +30,13 @@ namespace Dignite.Examining.QuestionTypes
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                Converters =
+                    {
+                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                    }
             };
             var configurationAsJson=JsonSerializer.Serialize(value, options);
             source[name]=configurationAsJson;

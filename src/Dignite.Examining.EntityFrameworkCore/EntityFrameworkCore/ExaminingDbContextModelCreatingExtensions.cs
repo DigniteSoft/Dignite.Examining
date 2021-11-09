@@ -6,9 +6,10 @@ using Dignite.Examining.Exams;
 using Dignite.Examining.Exercises;
 using Dignite.Examining.Questions;
 using Dignite.Examining.QuestionTypes;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Volo.Abp.EntityFrameworkCore.ValueConverters;
 
 namespace Dignite.Examining.EntityFrameworkCore
 {
@@ -55,8 +56,7 @@ namespace Dignite.Examining.EntityFrameworkCore
                 q.Property(q => q.Configuration)
                     .HasConversion(
                         new QuestionConfigurationValueConverter()
-                        )
-                .Metadata.SetValueComparer(new QuestionConfigurationDictionaryValueComparer());
+                        ).Metadata.SetValueComparer(new QuestionConfigurationDictionaryValueComparer());
             });
 
 
@@ -84,16 +84,8 @@ namespace Dignite.Examining.EntityFrameworkCore
 
                 //Properties
                 exam.Property(e => e.Title).IsRequired().HasMaxLength(ExamConsts.MaxTitleLength);
-                exam.Property(e => e.Settings)
-                    .HasConversion(
-                        config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                        jsonData => JsonConvert.DeserializeObject<ExamSetting>(jsonData)
-                        );
-                exam.Property(e => e.QuestionSettings)
-                    .HasConversion(
-                        config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                        jsonData => JsonConvert.DeserializeObject<ICollection<ExamQuestionSetting>>(jsonData)
-                        );
+                exam.Property(e => e.Settings).HasConversion(new AbpJsonValueConverter<ExamSetting>());
+                exam.Property(e => e.QuestionSettings).HasConversion(new AbpJsonValueConverter<ExamSetting>());
 
 
                 //Indexs

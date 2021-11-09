@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
 namespace Dignite.Examining.QuestionTypes
@@ -18,7 +19,16 @@ namespace Dignite.Examining.QuestionTypes
 
         private static string SerializeObject(QuestionConfigurationDictionary extraProperties)
         {
-            return JsonSerializer.Serialize(extraProperties);
+            var serializeOptions = new JsonSerializerOptions
+            {
+                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true,
+                Converters =
+                    {
+                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                    }
+            };
+            return JsonSerializer.Serialize(extraProperties, serializeOptions);
         }
 
         private static QuestionConfigurationDictionary DeserializeObject(string extraPropertiesAsJson)
