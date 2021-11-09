@@ -236,10 +236,13 @@ namespace Dignite.Examining.Exams
                 answerPaper.Answers.Select(a => a.Question).ToList()
                 );
 
-            //移除问题的解析
             foreach (var q in output.Questions)
             {
+                //移除问题的解析
                 q.Analysis = null;
+
+                //asp.net mvc的弱智序列化未能将字典表中复杂对象正确的序列化，
+                //将问题的配置字典值重新序列化一次解决问题
                 foreach (var property in q.Configuration.Properties)
                 {
                     q.Configuration.Properties[property.Key]= JsonConvert.SerializeObject( property.Value);

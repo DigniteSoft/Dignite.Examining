@@ -20,7 +20,7 @@ namespace Dignite.Examining.QuestionTypes.ChoiceQuestion
         /// </summary>
         public ChoiceQuestionMode Mode
         {
-            get => _fieldFormConfiguration.GetConfigurationOrDefault(ChoiceQuestionConfigurationNames.Mode, ChoiceQuestionMode.Single);
+            get => (ChoiceQuestionMode) (int)(long)_fieldFormConfiguration.GetConfigurationOrNull(ChoiceQuestionConfigurationNames.Mode, (int)ChoiceQuestionMode.Single);
             set => _fieldFormConfiguration.SetConfiguration(ChoiceQuestionConfigurationNames.Mode, value);
         }
 
