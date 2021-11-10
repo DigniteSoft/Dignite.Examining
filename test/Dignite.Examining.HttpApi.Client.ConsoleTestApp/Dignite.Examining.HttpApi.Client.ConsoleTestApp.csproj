@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="4.4.2" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="4.4.4" />
     <ProjectReference Include="..\..\src\Dignite.Examining.HttpApi.Client\Dignite.Examining.HttpApi.Client.csproj" />
   </ItemGroup>
 

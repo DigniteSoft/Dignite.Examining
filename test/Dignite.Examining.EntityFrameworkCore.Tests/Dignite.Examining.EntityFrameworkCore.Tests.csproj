@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.*" />
     <ProjectReference Include="..\..\src\Dignite.Examining.EntityFrameworkCore\Dignite.Examining.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Dignite.Examining.TestBase\Dignite.Examining.TestBase.csproj" />
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="4.4.2" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="4.4.4" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="4.4.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="4.4.4" />
     <ProjectReference Include="..\Dignite.Examining.Application.Contracts\Dignite.Examining.Application.Contracts.csproj" />
     <ProjectReference Include="..\..\..\Dignite.Abp\modules\identity\src\Dignite.Abp.Identity.HttpApi\Dignite.Abp.Identity.HttpApi.csproj" />
   </ItemGroup>
