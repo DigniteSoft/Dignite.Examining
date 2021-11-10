@@ -41,7 +41,7 @@ namespace Dignite.Examining.Exams
 
         public async Task<int> GetCountAsync(Guid creatorId, Guid? examId)
         {
-            return await (await QueryAsync(creatorId))
+            return await (await QueryAsync(creatorId,examId))
                 .CountAsync();
         }
 
@@ -104,7 +104,7 @@ namespace Dignite.Examining.Exams
             return (await GetQueryableAsync()).IncludeDetails();
         }
 
-        private async Task<IQueryable<AnswerPaper>> QueryAsync(Guid examId, IEnumerable<Guid> organizationUnitIds = null, Guid? userId = null)
+        private async Task<IQueryable<AnswerPaper>> QueryAsync(Guid examId, IEnumerable<Guid> organizationUnitIds , Guid? userId )
         {
             return (await GetDbSetAsync())
                 .Where(ap => ap.ExamId == examId && ap.IsActive)
