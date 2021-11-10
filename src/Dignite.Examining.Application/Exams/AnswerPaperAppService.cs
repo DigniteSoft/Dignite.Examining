@@ -118,7 +118,7 @@ namespace Dignite.Examining.Exams
         public async Task<PagedResultDto<AnswerPaperDto>> GetMyAsync(PagedResultRequestDto input)
         {
             var currentUserId = CurrentUser.Id.Value;
-            var count = await _answerPaperRepository.GetCountAsync(currentUserId);
+            var count = await _answerPaperRepository.GetCountAsync(currentUserId,null);
             if (count > 0)
             {
                 var result = await _answerPaperRepository.GetListAsync(currentUserId,null, input.SkipCount, input.MaxResultCount);

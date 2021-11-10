@@ -25,8 +25,8 @@ namespace Dignite.Examining.Exams
         /// <returns></returns>
         Task<int> GetCountAsync(
             Guid examId,
-            IEnumerable<Guid> organizationUnitIds = null,
-            Guid? userId = null);
+            IEnumerable<Guid> organizationUnitIds,
+            Guid? userId);
 
 
         /// <summary>
@@ -40,8 +40,8 @@ namespace Dignite.Examining.Exams
         /// <returns></returns>
         Task<List<AnswerPaper>> GetListAsync(
             Guid examId,
-            IEnumerable<Guid> organizationUnitIds = null,
-            Guid? userId = null,
+            IEnumerable<Guid> organizationUnitIds ,
+            Guid? userId,
             int skipCount = 0,
             int maxResultCount = 20);
 

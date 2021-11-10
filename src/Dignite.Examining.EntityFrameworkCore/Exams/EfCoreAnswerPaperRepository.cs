@@ -22,13 +22,13 @@ namespace Dignite.Examining.Exams
             return await (await GetDbSetAsync()).AnyAsync(ap => ap.ExamId == examId);
         }
 
-        public async Task<int> GetCountAsync(Guid examId, IEnumerable<Guid> organizationUnitIds = null, Guid? userId = null)
+        public async Task<int> GetCountAsync(Guid examId, IEnumerable<Guid> organizationUnitIds, Guid? userId)
         {
             return await (await QueryAsync(examId, organizationUnitIds, userId))
                 .CountAsync();
         }
 
-        public async Task<List<AnswerPaper>> GetListAsync(Guid examId, IEnumerable<Guid> organizationUnitIds = null, Guid? userId = null, int skipCount = 0, int maxResultCount = 20)
+        public async Task<List<AnswerPaper>> GetListAsync(Guid examId, IEnumerable<Guid> organizationUnitIds, Guid? userId, int skipCount = 0, int maxResultCount = 20)
         {
             return await (await QueryAsync(examId, organizationUnitIds, userId))
                 .OrderByDescending(ap=>ap.IsActive)
