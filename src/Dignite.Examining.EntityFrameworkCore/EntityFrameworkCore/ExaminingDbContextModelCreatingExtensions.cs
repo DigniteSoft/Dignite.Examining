@@ -85,7 +85,7 @@ namespace Dignite.Examining.EntityFrameworkCore
                 //Properties
                 exam.Property(e => e.Title).IsRequired().HasMaxLength(ExamConsts.MaxTitleLength);
                 exam.Property(e => e.Settings).HasConversion(new AbpJsonValueConverter<ExamSetting>());
-                exam.Property(e => e.QuestionSettings).HasConversion(new AbpJsonValueConverter<ExamSetting>());
+                exam.Property(e => e.QuestionSettings).HasConversion(new AbpJsonValueConverter<ICollection<ExamQuestionSetting>>());
 
 
                 //Indexs
