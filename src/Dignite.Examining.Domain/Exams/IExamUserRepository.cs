@@ -7,8 +7,8 @@ namespace Dignite.Examining.Exams
 {
     public interface IExamUserRepository : IBasicRepository<ExamUser>
     {
-        Task<ExamUser> FindByExamCode(Guid examId,string examCode);
+        Task<ExamUser> FindByExamCodeAsync(Guid examId,string examCode);
 
-        Task<bool> CurrentUserIsInExamUsers(Guid examId, Guid userId);
+        Task<ExamUser> FindAsync(Guid examId, Guid userId);
     }
 }

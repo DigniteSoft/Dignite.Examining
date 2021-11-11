@@ -80,6 +80,6 @@ namespace Dignite.Examining.Exams
         /// <param name="id"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Task<UserRank> GetUserRankAsync(Guid id, Guid userId, GetUserRankByOrganizationUnitsInput input = null);
+        Task<UserRank> GetUserRankAsync(Guid id, Guid userId, Guid? organizationUnitId);
     }
 }

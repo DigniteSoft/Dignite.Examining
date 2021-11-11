@@ -133,9 +133,9 @@ namespace Dignite.Examining.Exams
         [Authorize]
         [HttpGet]
         [Route("{id}/{userid}/rank")]
-        public async Task<UserRank> GetUserRankAsync(Guid id, Guid userId, GetUserRankByOrganizationUnitsInput input = null)
+        public async Task<UserRank> GetUserRankAsync(Guid id, Guid userId, Guid? organizationUnitId)
         {
-            return await _examAppService.GetUserRankAsync(id,userId,input);
+            return await _examAppService.GetUserRankAsync(id,userId, organizationUnitId);
         }
 
         /// <summary>

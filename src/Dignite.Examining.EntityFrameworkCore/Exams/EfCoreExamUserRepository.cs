@@ -15,7 +15,7 @@ namespace Dignite.Examining.Exams
 
         }
 
-        public async Task<ExamUser> FindByExamCode(Guid examId, string examCode)
+        public async Task<ExamUser> FindByExamCodeAsync(Guid examId, string examCode)
         {
             return await (await GetDbSetAsync())
                 .FirstOrDefaultAsync(m => 
@@ -23,10 +23,10 @@ namespace Dignite.Examining.Exams
                 && m.ExamCode==examCode);
         }
 
-        public async Task<bool> CurrentUserIsInExamUsers(Guid examId, Guid userId)
+        public async Task<ExamUser> FindAsync(Guid examId, Guid userId)
         {
             return await (await GetDbSetAsync())
-                .AnyAsync(m =>
+                .FirstOrDefaultAsync(m =>
                 m.ExamId == examId
                 && m.UserId == userId);
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exams
@@ -20,7 +19,7 @@ namespace Dignite.Examining.Exams
         /// <summary>
         /// 
         /// </summary>
-        public IEnumerable<Guid> OrganizationUnitIds { get; set; }
+        public Guid? OrganizationUnitId { get; set; }
 
     }
 }

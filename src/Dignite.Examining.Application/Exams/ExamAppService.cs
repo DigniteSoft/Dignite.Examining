@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using Dignite.Abp.Identity;
 using Dignite.Examining.Permissions;
 using Dignite.Examining.Questions;
 using Microsoft.AspNetCore.Authorization;
@@ -19,15 +20,8 @@ namespace Dignite.Examining.Exams
         private readonly IExamManager _examManager;
         private readonly IExamUserRepository _examUserRepository;
         private readonly IQuestionRepository _questionRepository;
+        private readonly IOrganizationUnitAppService _organizationUnitAppService;
 
-        public ExamAppService(IExamRepository examRepository, IAnswerPaperRepository answerPaperRepository, IExamManager examManager, IExamUserRepository examUserRepository, IQuestionRepository questionRepository)
-        {
-            _examRepository = examRepository;
-            _answerPaperRepository = answerPaperRepository;
-            _examManager = examManager;
-            _examUserRepository = examUserRepository;
-            _questionRepository = questionRepository;
-        }
 
 
         /// <summary>
@@ -136,7 +130,8 @@ namespace Dignite.Examining.Exams
         [Authorize()]
         public async Task<bool> CurrentUserIsInExamUsers(Guid id)
         {
-            return await _examUserRepository.CurrentUserIsInExamUsers(id,CurrentUser.Id.Value);
+            var examUser = await _examUserRepository.FindAsync(id,CurrentUser.Id.Value);
+            return examUser==null;
         }
 
         /// <summary>
@@ -151,29 +146,19 @@ namespace Dignite.Examining.Exams
         [Authorize()]
         public async Task<GenerateAnswerPaperOutput> GenerateAnswerPaperAsync(Guid id,string examCode=null)
         {
-            Guid userId;
-            Guid? ouId=null;
-            if (!await _examUserRepository.CurrentUserIsInExamUsers(id,CurrentUser.Id.Value))
+            var examUser = await _examUserRepository.FindAsync(id, CurrentUser.Id.Value);
+            if (examUser==null)
             {
                 if (examCode.IsNullOrEmpty())
                 {
                     throw new Volo.Abp.UserFriendlyException("请填写考试码！");
                 }
 
-                var examUser = await _examUserRepository.FindByExamCode(id, examCode);
+                examUser = await _examUserRepository.FindByExamCodeAsync(id, examCode);
                 if (examUser == null)
                 {
                     throw new Volo.Abp.UserFriendlyException("考试码不正确！");
                 }
-                else
-                {
-                    userId = examUser.UserId;
-                    ouId = examUser.OrganizationUnitId;
-                }
-            }
-            else
-            {
-                userId = CurrentUser.Id.Value;
             }
 
             //
@@ -181,7 +166,7 @@ namespace Dignite.Examining.Exams
             CheckGenerateAnswerPaper(exam);
 
             //用户有效成绩的答卷（只有一条是有效的）
-            var activedUserAnswerPapers = await _answerPaperRepository.GetListAsync(exam.Id, null, userId, 0, 1);
+            var activedUserAnswerPapers = await _answerPaperRepository.GetListAsync(exam.Id, null, examUser.UserId, 0, 1);
             if (activedUserAnswerPapers.Any())
             {
                 if (activedUserAnswerPapers[0].CreatorId != CurrentUser.Id)
@@ -216,8 +201,8 @@ namespace Dignite.Examining.Exams
                 {
                     //生成试卷
                     answerPaper = await _examManager.GenerateAnswerPaperAsync(exam);
-                    answerPaper.UserId = userId;
-                    answerPaper.OrganizationUnitId = ouId;
+                    answerPaper.UserId = examUser.UserId;
+                    answerPaper.OrganizationUnitId = examUser.OrganizationUnitId;
                     await _answerPaperRepository.InsertAsync(answerPaper);
                 }
             }
@@ -225,8 +210,8 @@ namespace Dignite.Examining.Exams
             {
                 //生成试卷
                 answerPaper = await _examManager.GenerateAnswerPaperAsync(exam);
-                answerPaper.UserId = userId;
-                answerPaper.OrganizationUnitId = ouId;
+                answerPaper.UserId = examUser.UserId;
+                answerPaper.OrganizationUnitId = examUser.OrganizationUnitId;
                 await _answerPaperRepository.InsertAsync(answerPaper);
             }
 
@@ -256,13 +241,37 @@ namespace Dignite.Examining.Exams
         [Authorize()]
         public async Task<PagedResultDto<AnswerPaperDto>> GetAnswerPapersAsync(Guid id, GetAnswerPapersInput input)
         {
-            var count = await _answerPaperRepository.GetCountAsync(id,input.OrganizationUnitIds,input.UserId);
-            var result = await _answerPaperRepository.GetListAsync(id, input.OrganizationUnitIds, input.UserId,input.SkipCount, input.MaxResultCount);
+            IReadOnlyList<OrganizationUnitDto> organizationUnits = null;
+            IEnumerable<Guid> organizationUnitIds = null;
+            if (input.OrganizationUnitId.HasValue)
+            {
+                organizationUnits = await GetOrganizationUnits(input.OrganizationUnitId);
+                organizationUnitIds = organizationUnits == null ? null : organizationUnits.Select(ou => ou.Id);
+            }
+            var count = await _answerPaperRepository.GetCountAsync(id, organizationUnitIds, input.UserId);
+            var result = await _answerPaperRepository.GetListAsync(id, organizationUnitIds, input.UserId,input.SkipCount, input.MaxResultCount);
 
             var dto = new PagedResultDto<AnswerPaperDto>(
                 count,
                 ObjectMapper.Map<List<AnswerPaper>, List<AnswerPaperDto>>(result)
                 );
+
+            //填充组织机构
+            if (dto.Items.Where(ap => ap.OrganizationUnitId.HasValue).Select(ap => ap.OrganizationUnitId).Distinct().Count() > 0)
+            {
+                if (!input.OrganizationUnitId.HasValue)
+                {
+                    organizationUnits = await GetOrganizationUnits(input.OrganizationUnitId);
+                }
+                foreach (var ap in dto.Items)
+                {
+                    if (ap.OrganizationUnitId.HasValue)
+                    {
+                        var organizationUnit = organizationUnits.FirstOrDefault(ou => ou.Id == ap.OrganizationUnitId.Value);
+                        ap.OrganizationUnitName = organizationUnit?.DisplayName;
+                    }
+                }
+            }
 
             return dto;
         }
@@ -274,13 +283,19 @@ namespace Dignite.Examining.Exams
         /// <param name="userId"></param>
         /// <returns></returns>
         [Authorize()]
-        public async Task<UserRank> GetUserRankAsync(Guid id,Guid userId,GetUserRankByOrganizationUnitsInput input=null)
+        public async Task<UserRank> GetUserRankAsync(Guid id,Guid userId,Guid? organizationUnitId)
         {
-            input = input == null ? new GetUserRankByOrganizationUnitsInput() : input;
-            var userRank = await _answerPaperRepository.GetUserRankAsync(id, userId, input.OrganizationUnitIds);
+            IEnumerable<Guid> organizationUnitIds = null;
+            if (organizationUnitId.HasValue)
+            {
+                var organizationUnits = await GetOrganizationUnits(organizationUnitId);
+                organizationUnitIds = organizationUnits == null ? null : organizationUnits.Select(ou => ou.Id);
+            }
+
+            var userRank = await _answerPaperRepository.GetUserRankAsync(id, userId, organizationUnitIds);
             if (userRank.HasValue)
             {
-                var userAnserPaper = await _answerPaperRepository.GetListAsync(id, input.OrganizationUnitIds, userId, 0, 1);
+                var userAnserPaper = await _answerPaperRepository.GetListAsync(id, organizationUnitIds, userId, 0, 1);
                 return new UserRank(
                     userRank.Value,
                     ObjectMapper.Map<AnswerPaper, AnswerPaperDto>(userAnserPaper[0])
@@ -312,5 +327,27 @@ namespace Dignite.Examining.Exams
                 throw new Volo.Abp.UserFriendlyException($"{exam.Settings.ExpiryTime.Value.ToString("yyyy/MM/dd HH:mm:ss.fff")}已截止考试！");
             }
         }
+
+        private async Task<IReadOnlyList<OrganizationUnitDto>> GetOrganizationUnits(Guid? organizationUnitId)
+        {
+            if (organizationUnitId.HasValue)
+            {
+                List<OrganizationUnitDto> organizations = new List<OrganizationUnitDto>();
+                var organizationUnit = await _organizationUnitAppService.GetAsync(organizationUnitId.Value);
+                if (organizationUnit.ChildrenCount > 0)
+                {
+                    organizations = (await _organizationUnitAppService.GetChildrenAsync(organizationUnitId.Value, true)).Items.ToList();
+                }
+                organizations.Add(organizationUnit);
+
+                return organizations;
+            }
+            else
+            {
+                return (await _organizationUnitAppService.GetChildrenAsync(null, true)).Items;
+
+            }
+        }
+
     }
 }
