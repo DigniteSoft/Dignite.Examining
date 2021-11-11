@@ -35,7 +35,6 @@
     <ProjectReference Include="..\..\src\Dignite.Examining.Application\Dignite.Examining.Application.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Examining.EntityFrameworkCore\Dignite.Examining.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\Dignite.Examining.Host.Shared\Dignite.Examining.Host.Shared.csproj" />
-	  <ProjectReference Include="..\..\..\Dignite.Abp\modules\identity\src\Dignite.Abp.Identity.HttpApi\Dignite.Abp.Identity.HttpApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -33,7 +33,6 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
 using Microsoft.Extensions.PlatformAbstractions;
-using Dignite.Abp.Identity;
 
 namespace Dignite.Examining
 {
@@ -50,8 +49,7 @@ namespace Dignite.Examining
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
         typeof(AbpAspNetCoreSerilogModule),
         typeof(AbpSwashbuckleModule),
-        typeof(Volo.Abp.Http.Client.IdentityModel.Web.AbpHttpClientIdentityModelWebModule),
-        typeof(DigniteAbpIdentityHttpApiModule)
+        typeof(Volo.Abp.Http.Client.IdentityModel.Web.AbpHttpClientIdentityModelWebModule)
         )]
     public class ExaminingHttpApiHostModule : AbpModule
     {

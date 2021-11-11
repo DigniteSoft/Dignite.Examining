@@ -79,7 +79,9 @@ namespace Dignite.Examining
         typeof(AbpAspNetCoreAuthenticationJwtBearerModule),
         typeof(ExaminingApplicationContractsModule),
         typeof(AbpAspNetCoreSerilogModule),
-        typeof(AbpSwashbuckleModule)
+        typeof(AbpSwashbuckleModule),
+        typeof(Abp.Identity.DigniteAbpIdentityApplicationModule),
+        typeof(Abp.Identity.DigniteAbpIdentityHttpApiModule)
         )]
     public class ExaminingIdentityServerModule : AbpModule
     {
