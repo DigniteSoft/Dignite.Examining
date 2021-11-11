@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
-using System.Threading.Tasks;
-using Dignite.Abp.Identity;
+﻿using Dignite.Abp.Identity;
 using Dignite.Examining.Permissions;
 using Dignite.Examining.Questions;
 using Microsoft.AspNetCore.Authorization;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Examining.Exams
@@ -21,6 +18,16 @@ namespace Dignite.Examining.Exams
         private readonly IExamUserRepository _examUserRepository;
         private readonly IQuestionRepository _questionRepository;
         private readonly IOrganizationUnitAppService _organizationUnitAppService;
+
+        public ExamAppService(IExamRepository examRepository, IAnswerPaperRepository answerPaperRepository, IExamManager examManager, IExamUserRepository examUserRepository, IQuestionRepository questionRepository, IOrganizationUnitAppService organizationUnitAppService)
+        {
+            _examRepository = examRepository;
+            _answerPaperRepository = answerPaperRepository;
+            _examManager = examManager;
+            _examUserRepository = examUserRepository;
+            _questionRepository = questionRepository;
+            _organizationUnitAppService = organizationUnitAppService;
+        }
 
 
 
