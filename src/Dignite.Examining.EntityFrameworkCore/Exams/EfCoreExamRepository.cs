@@ -24,7 +24,7 @@ namespace Dignite.Examining.Exams
                 .CountAsync();
         }
 
-        public async Task<List<Exam>> GetListAsync(bool? isActive, string filter, Guid? userId, int maxResultCount = 20, int skipCount = 0)
+        public async Task<List<Exam>> GetListAsync(bool? isActive, string filter, Guid? userId, int skipCount = 0, int maxResultCount = 20)
         {
             return await(await QueryAsync(isActive, filter, userId))
                 .OrderByDescending(ap => ap.Id)

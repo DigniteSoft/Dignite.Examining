@@ -19,7 +19,11 @@ namespace Dignite.Examining.Exams
         private readonly IQuestionRepository _questionRepository;
         private readonly IOrganizationUnitAppService _organizationUnitAppService;
 
-        public ExamAppService(IExamRepository examRepository, IAnswerPaperRepository answerPaperRepository, IExamManager examManager, IExamUserRepository examUserRepository, IQuestionRepository questionRepository, IOrganizationUnitAppService organizationUnitAppService)
+        public ExamAppService(IExamRepository examRepository, 
+            IAnswerPaperRepository answerPaperRepository, 
+            IExamManager examManager, IExamUserRepository examUserRepository, 
+            IQuestionRepository questionRepository, 
+            IOrganizationUnitAppService organizationUnitAppService)
         {
             _examRepository = examRepository;
             _answerPaperRepository = answerPaperRepository;

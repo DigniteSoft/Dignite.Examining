@@ -14,8 +14,8 @@ namespace Dignite.Examining.Exams
 
         Task<List<Exam>> GetListAsync(
             bool? isActive=null, string filter = null, Guid? creatorId = null,
-            int maxResultCount = 20,
-            int skipCount = 0);
+            int skipCount = 0,
+            int maxResultCount = 20);
 
     }
 }

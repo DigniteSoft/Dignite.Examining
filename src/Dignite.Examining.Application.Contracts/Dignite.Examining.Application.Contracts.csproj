@@ -12,7 +12,7 @@
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.4.4" />
     <PackageReference Include="Volo.Abp.Authorization" Version="4.4.4" />
     <ProjectReference Include="..\Dignite.Examining.Domain.Shared\Dignite.Examining.Domain.Shared.csproj" />
-    <ProjectReference Include="..\..\..\Dignite.Abp\modules\identity\src\Dignite.Abp.Identity.Application.Contracts\Dignite.Abp.Identity.Application.Contracts.csproj" />
+	  <ProjectReference Include="..\..\..\Dignite.Abp\modules\identity\src\Dignite.Abp.Identity.HttpApi.Client\Dignite.Abp.Identity.HttpApi.Client.csproj" />
   </ItemGroup>
 
 </Project>
