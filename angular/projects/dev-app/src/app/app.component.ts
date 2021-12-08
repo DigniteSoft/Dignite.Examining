@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ReplaceableComponentsService } from '@abp/ng.core'; // imported ReplaceableComponentsService
+import { RoutesComponent } from './routes/routes.component'; // imported RoutesComponent
+import { eThemeBasicComponents } from '@abp/ng.theme.basic'; // imported eThemeBasicComponents
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,13 @@ import { Component } from '@angular/core';
     <abp-dynamic-layout></abp-dynamic-layout>
   `,
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+  constructor( private replaceableComponents: ReplaceableComponentsService) {} // injected ReplaceableComponentsService
+
+  ngOnInit() {
+    this.replaceableComponents.add({
+        component: RoutesComponent,
+        key: eThemeBasicComponents.Routes,
+      });
+  }
+}

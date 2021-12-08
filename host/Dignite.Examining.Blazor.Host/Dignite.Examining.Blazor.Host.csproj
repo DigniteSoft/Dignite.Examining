@@ -16,19 +16,19 @@
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="4.4.4" />
-    <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme" Version="4.4.4" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Account.Application.Contracts" Version="4.4.4" />
     <PackageReference Include="Volo.Abp.Identity.Blazor.WebAssembly" Version="4.4.4" />
     <PackageReference Include="Volo.Abp.TenantManagement.Blazor.WebAssembly" Version="4.4.4" />
-    <PackageReference Include="Volo.Abp.SettingManagement.Blazor.WebAssembly" Version="4.4.4" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup>    
+    <ProjectReference Include="..\..\..\Dignite.Abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.csproj" />    
     <ProjectReference Include="..\Dignite.Examining.Host.Shared\Dignite.Examining.Host.Shared.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Examining.Blazor.WebAssembly\Dignite.Examining.Blazor.WebAssembly.csproj" />
+	  <ProjectReference Include="..\..\..\Dignite.Abp\modules\SettingManagement\src\Dignite.Abp.SettingManagement.Blazor.WebAssembly\Dignite.Abp.SettingManagement.Blazor.WebAssembly.csproj" />
   </ItemGroup>
 
 </Project>

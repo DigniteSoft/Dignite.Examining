@@ -9,7 +9,7 @@ namespace Dignite.Examining
         typeof(ExaminingDomainSharedModule),
         typeof(AbpDddApplicationContractsModule),
         typeof(AbpAuthorizationModule),
-        typeof(DigniteAbpIdentityHttpApiClientModule)
+        typeof(DigniteAbpIdentityApplicationContractsModule)
         )]
     public class ExaminingApplicationContractsModule : AbpModule
     {

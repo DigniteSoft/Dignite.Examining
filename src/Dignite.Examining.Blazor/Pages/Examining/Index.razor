@@ -1,8 +1,19 @@
 @page "/Examining"
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@using Microsoft.AspNetCore.Components.Web
 @using global::Dignite.Examining.Localization
 @inject IStringLocalizer<ExaminingResource> L
 @{
 }
-<h1>Examining</h1>
-<p>@L["SamplePageMessage"]</p>
+
+
+<PageHeader Title="Examining"></PageHeader>
+
+<main class="page-main">
+    <p>@L["SamplePageMessage"]</p>
+</main>
+<footer class="page-footer">
+    <hr />
+    footer
+</footer>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Examining.Domain.Shared", "src\Dignite.Examining.Domain.Shared\Dignite.Examining.Domain.Shared.csproj", "{D64C1577-4929-4B60-939E-96DE1534891A}"
 EndProject
@@ -52,6 +52,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Examining.Blazor.WebAssembly", "src\Dignite.Examining.Blazor.WebAssembly\Dignite.Examining.Blazor.WebAssembly.csproj", "{F0EE5760-262D-456A-AA7C-E84F484A05F6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Examining.Blazor.Server.Host", "host\Dignite.Examining.Blazor.Server.Host\Dignite.Examining.Blazor.Server.Host.csproj", "{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "theme", "theme", "{75E17343-7196-45C6-944B-AF545ECA473A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.Web.PureTheme", "..\Dignite.Abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Web.PureTheme\Dignite.Abp.AspNetCore.Components.Web.PureTheme.csproj", "{E1104434-6F9E-49F4-8FE6-47ADC71C41B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme", "..\Dignite.Abp\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.csproj", "{44983F8E-AB0D-47B9-9614-9FD414E0BD38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.Blazor", "..\Dignite.Abp\modules\SettingManagement\src\Dignite.Abp.SettingManagement.Blazor\Dignite.Abp.SettingManagement.Blazor.csproj", "{6B37DC9A-0970-48EE-B552-09FB9CDBB940}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.Blazor.WebAssembly", "..\Dignite.Abp\modules\SettingManagement\src\Dignite.Abp.SettingManagement.Blazor.WebAssembly\Dignite.Abp.SettingManagement.Blazor.WebAssembly.csproj", "{3592B299-0D65-40BC-AE69-A84D5254411D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Blazor", "..\Dignite.Abp\framework\src\Dignite.Abp.FieldCustomizing.Blazor\Dignite.Abp.FieldCustomizing.Blazor.csproj", "{3A31797F-F31B-4EA2-A6FE-D40CC4647515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +159,26 @@ Global
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1104434-6F9E-49F4-8FE6-47ADC71C41B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1104434-6F9E-49F4-8FE6-47ADC71C41B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1104434-6F9E-49F4-8FE6-47ADC71C41B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1104434-6F9E-49F4-8FE6-47ADC71C41B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44983F8E-AB0D-47B9-9614-9FD414E0BD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44983F8E-AB0D-47B9-9614-9FD414E0BD38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44983F8E-AB0D-47B9-9614-9FD414E0BD38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44983F8E-AB0D-47B9-9614-9FD414E0BD38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B37DC9A-0970-48EE-B552-09FB9CDBB940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B37DC9A-0970-48EE-B552-09FB9CDBB940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B37DC9A-0970-48EE-B552-09FB9CDBB940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B37DC9A-0970-48EE-B552-09FB9CDBB940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3592B299-0D65-40BC-AE69-A84D5254411D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3592B299-0D65-40BC-AE69-A84D5254411D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3592B299-0D65-40BC-AE69-A84D5254411D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3592B299-0D65-40BC-AE69-A84D5254411D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A31797F-F31B-4EA2-A6FE-D40CC4647515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A31797F-F31B-4EA2-A6FE-D40CC4647515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A31797F-F31B-4EA2-A6FE-D40CC4647515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A31797F-F31B-4EA2-A6FE-D40CC4647515}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +206,8 @@ Global
 		{299BE52E-823F-408E-9C6D-7E2F81BA34FF} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 		{F0EE5760-262D-456A-AA7C-E84F484A05F6} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
 		{FEA752A1-5B4E-49E9-B1F3-DDC25E41BB52} = {E400416D-2895-4512-9D17-90681EEC7E0A}
+		{E1104434-6F9E-49F4-8FE6-47ADC71C41B8} = {75E17343-7196-45C6-944B-AF545ECA473A}
+		{44983F8E-AB0D-47B9-9614-9FD414E0BD38} = {75E17343-7196-45C6-944B-AF545ECA473A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4324B3B4-B60B-4E3C-91D8-59576B4E26DD}

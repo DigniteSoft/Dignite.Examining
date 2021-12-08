@@ -1,0 +1,25 @@
+<ul class="navbar-nav">
+  <ng-container
+    *ngFor="let route of routesService.visible$ | async; trackBy: trackByFn"
+    [ngTemplateOutlet]="isDropdown(route) ? dropdownLink : defaultLink"
+    [ngTemplateOutletContext]="{ $implicit: route }"
+  >
+  </ng-container>  
+  
+  <ng-template #defaultLink let-route>
+    <li class="nav-item" *abpPermission="route.requiredPolicy">
+      <a class="nav-link" [routerLink]="[route.path]"
+        ><i *ngIf="route.iconClass" [ngClass]="route.iconClass"></i>
+        {{ route.name | abpLocalization }}</a
+      >
+    </li>
+  </ng-template>
+  
+  <ng-template #dropdownLink let-route>
+      <li class="nav-item" *ngIf="isGranted(route)">
+        <a class="nav-link" [routerLink]="getRoutePath(route)">
+          <i *ngIf="route.iconClass" [ngClass]="route.iconClass"></i>
+          {{ route.name | abpLocalization }}</a>
+      </li>
+  </ng-template>
+</ul>

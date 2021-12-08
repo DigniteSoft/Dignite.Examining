@@ -7,27 +7,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Account;
 using Dignite.Examining.Blazor.WebAssembly;
-using Volo.Abp.AspNetCore.Components.Web.BasicTheme.Themes.Basic;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
-using Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Identity.Blazor.WebAssembly;
 using Volo.Abp.Modularity;
-using Volo.Abp.SettingManagement.Blazor.WebAssembly;
 using Volo.Abp.TenantManagement.Blazor.WebAssembly;
 using Volo.Abp.UI.Navigation;
+using Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme;
+using Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure;
+using Dignite.Abp.SettingManagement.Blazor.WebAssembly;
 
 namespace Dignite.Examining.Blazor.Host
 {
     [DependsOn(
         typeof(AbpAutofacWebAssemblyModule),
-        typeof(AbpAspNetCoreComponentsWebAssemblyBasicThemeModule),
+        typeof(DigniteAbpAspNetCoreComponentsWebAssemblyPureThemeModule),
         typeof(AbpAccountApplicationContractsModule),
         typeof(AbpIdentityBlazorWebAssemblyModule),
         typeof(AbpTenantManagementBlazorWebAssemblyModule),
-        typeof(AbpSettingManagementBlazorWebAssemblyModule),
-        typeof(ExaminingBlazorWebAssemblyModule)
+        typeof(ExaminingBlazorWebAssemblyModule),
+        typeof(SettingManagementBlazorWebAssemblyModule)
     )]
     public class ExaminingBlazorHostModule : AbpModule
     {

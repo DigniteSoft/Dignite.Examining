@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 import { ThemeBasicModule } from '@abp/ng.theme.basic';
+import { RoutesComponent } from './routes/routes.component';
+import { NavsComponent } from './routes/navs.component';
 
 @NgModule({
   imports: [
@@ -37,7 +39,7 @@ import { ThemeBasicModule } from '@abp/ng.theme.basic';
     NgxsModule.forRoot(),
   ],
   providers: [APP_ROUTE_PROVIDER],
-  declarations: [AppComponent],
+  declarations: [AppComponent, RoutesComponent, NavsComponent],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

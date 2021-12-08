@@ -16,8 +16,13 @@ namespace Dignite.Examining.Blazor.Menus
         private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
         {
             //Add main menu items.
-            context.Menu.AddItem(new ApplicationMenuItem(ExaminingMenus.Prefix, displayName: "Examining", "/Examining", icon: "fa fa-globe"));
-            
+            context.Menu.AddItem(new ApplicationMenuItem(ExaminingMenus.Prefix, displayName: "考试", "/examining", icon: "fa fa-globe"));
+
+
+            context.Menu.AddItem(new ApplicationMenuItem(ExaminingMenus.Prefix, displayName: "消息", "/messages", icon: "fa fa-heartbeat"));
+            context.Menu.AddItem(new ApplicationMenuItem(ExaminingMenus.Prefix, displayName: "排行榜", "/rank", icon: "fa fa-cloud"));
+            context.Menu.AddItem(new ApplicationMenuItem(ExaminingMenus.Prefix, displayName: "我的", "/my", icon: "fa fa-user"));
+
             return Task.CompletedTask;
         }
     }

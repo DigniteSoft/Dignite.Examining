@@ -68,8 +68,6 @@ namespace Dignite.Examining
         typeof(AbpPermissionManagementApplicationModule),
         typeof(AbpPermissionManagementHttpApiModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpSettingManagementApplicationModule),
-        typeof(AbpSettingManagementHttpApiModule),
         typeof(AbpFeatureManagementEntityFrameworkCoreModule),
         typeof(AbpFeatureManagementApplicationModule),
         typeof(AbpFeatureManagementHttpApiModule),
